@@ -36,3 +36,5 @@ Thanks to Community Design in figma!
   ```
   yarn dev
   ```
+## When Imported new SVG -> put in /public/assets/icons/
+- Run ```yarn generate-icon```
