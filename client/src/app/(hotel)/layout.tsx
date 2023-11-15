@@ -6,9 +6,9 @@ export default function HotelRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="w-screen min-h-screen">
+    <main className="w-screen min-h-screen bg-[#FAFBFC]">
       <TopMenu />
-      <div className="mt-[80px] bg-white">{children}</div>
+      {children}
     </main>
   );
 }

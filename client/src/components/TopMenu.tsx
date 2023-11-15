@@ -1,18 +1,15 @@
 "use client";
-import { LogoIcon } from "@/components/icons";
-import BedIcon from "@/components/icons/BedIcon";
-import MyBookingIcon from "@/components/icons/MyBookingIcon";
-import UserIcon from "@/components/icons/UserIcon";
+import { BedIcon, LogoIcon, MyBookingIcon, UserIcon } from "@/components/icons";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function TopMenu() {
   const { data: session } = useSession();
   return (
-    <div className="h-[80px] bg-white fixed top-0 right-0 left-0 z-30 flex flex-row justify-between shadow-lg px-24">
+    <div className="h-[80px] bg-white z-30 relative flex flex-row justify-between shadow-lg px-24">
       <div className="flex flex-row space-x-8">
         <Link href="/hotel">
-          <div className="h-full justify-center flex items-center space-x-2 border-b-4 border-transparent hover:border-mint-green">
+          <div className="h-full justify-center flex items-center space-x-2 border-b-4 border-transparent hover:border-mint-green transition-all duration-300">
             <BedIcon className="w-6 h-6" />
             <div className="font-montserrat font-semibold">Find Stays</div>
           </div>
@@ -20,7 +17,7 @@ export default function TopMenu() {
 
         {session && (
           <Link href="/booking">
-            <div className="h-full justify-center flex items-center space-x-2 border-b-4 border-transparent hover:border-mint-green">
+            <div className="h-full justify-center flex items-center space-x-2 border-b-4 border-transparent hover:border-mint-green transition-all duration-300">
               <MyBookingIcon className="w-6 h-6" />
               <div className="font-montserrat font-semibold">My Bookings</div>
             </div>
@@ -46,7 +43,7 @@ export default function TopMenu() {
             </div>
             <div
               onClick={() => signOut({ callbackUrl: "/" })}
-              className="flex items-center h-full font-montserrat font-semibold border-b-4 border-transparent hover:border-salmon hover:cursor-pointer"
+              className="flex items-center h-full font-montserrat font-semibold border-b-4 border-transparent hover:border-salmon hover:cursor-pointer transition-all duration-300"
             >
               Logout
             </div>

@@ -1,3 +1,4 @@
+import { IHotel } from "@/models/hotel.model";
 import axios from "axios";
 
 async function getAllHotels() {
@@ -5,7 +6,7 @@ async function getAllHotels() {
   if (!res) {
     throw new Error("Failed to get hotels");
   }
-  return await res.data;
+  return (await res.data.data) as IHotel[];
 }
 
 async function getHotel(hotelId: string) {
@@ -15,7 +16,7 @@ async function getHotel(hotelId: string) {
   if (!res) {
     throw new Error("Failed to get hotels");
   }
-  return await res.data;
+  return (await res.data.data) as IHotel;
 }
 
 const hotelService = { getAllHotels, getHotel };

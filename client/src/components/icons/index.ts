@@ -1,4 +1,6 @@
-export { default as BedIconIcon } from './BedIcon';
+export { default as BedIcon } from './Bed';
+export { default as LocationIcon } from './Location';
 export { default as LogoIcon } from './Logo';
-export { default as MyBookingIconIcon } from './MyBookingIcon';
-export { default as UserIconIcon } from './UserIcon';
+export { default as MyBookingIcon } from './MyBooking';
+export { default as PaperPlaneIcon } from './PaperPlane';
+export { default as UserIcon } from './User';
