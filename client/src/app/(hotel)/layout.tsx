@@ -8,7 +8,7 @@ export default function HotelRootLayout({
   return (
     <main className="w-screen min-h-screen bg-[#FAFBFC]">
       <TopMenu />
-      {children}
+      <div className="py-12 px-24">{children}</div>
     </main>
   );
 }

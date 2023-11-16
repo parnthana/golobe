@@ -7,14 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server" : "cd ../server/ && yarn dev",
+    "server": "cd ../server/ && yarn dev",
     "generate-icon": "npx @svgr/cli --out-dir src/components/icons --config-file svg.config.js -- public/assets/icons/"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
+    "@mui/x-date-pickers": "^6.18.1",
     "axios": "^1.6.1",
+    "dayjs": "^1.11.10",
     "next": "14.0.2",
     "next-auth": "^4.24.5",
     "react": "^18",

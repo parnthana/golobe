@@ -13,6 +13,8 @@ const config: Config = {
         "mint-green": "#8DD3BB",
         salmon: "#FF8682",
         neutrals: "#FFFFFF",
+        "neutrals-gray-2": "#D2D1D3",
+        "neutrals-gray-5": "#8F8C91",
       },
       fontFamily: {
         tradegothic: ["tradegothic", "sans-serif"],

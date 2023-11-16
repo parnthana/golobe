@@ -6,7 +6,7 @@ export default function Banner() {
   return (
     <div className="relative w-full max-h-screen">
       <Image
-        src="/assets/images/Banner.png"
+        src="/assets/images/Banner.jpeg"
         alt="banner"
         fill={true}
         className="absolute inset-0 w-full h-full object-cover"

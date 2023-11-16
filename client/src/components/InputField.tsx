@@ -1,15 +1,19 @@
 interface InputFieldProps {
+  value?: string;
   label?: string;
   placeholder?: string;
   type?: string | "text";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   error?: string;
+  readOnly?: boolean;
 }
 
 export default function InputField(props: InputFieldProps) {
   return (
     <input
+      value={props.value || ""}
+      readOnly={props.readOnly}
       onKeyDown={props.onKeyDown}
       type={props.type}
       className={`${
