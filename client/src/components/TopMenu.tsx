@@ -1,5 +1,5 @@
 "use client";
-import { BedIcon, LogoIcon, MyBookingIcon, UserIcon } from "@/components/icons";
+import { BedIcon, LogoIcon, BookingIcon, UserIcon } from "@/components/icons";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ export default function TopMenu() {
         {session && (
           <Link href="/booking">
             <div className="h-full justify-center flex items-center space-x-2 border-b-4 border-transparent hover:border-mint-green transition-all duration-300">
-              <MyBookingIcon className="w-6 h-6" />
+              <BookingIcon className="w-6 h-6" />
               <div className="font-montserrat font-semibold">My Bookings</div>
             </div>
           </Link>

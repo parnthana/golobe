@@ -7,4 +7,5 @@ export interface IHotel {
   tel: string;
   picture: string;
   id: string;
+  price: number;
 }

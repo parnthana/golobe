@@ -32,6 +32,10 @@ const HotelSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add URL to hotel picture"],
     },
+    price:{
+      type:Number,
+      required:[true, "Please add price per night"]
+    }
   },
   {
     toJSON: { virtuals: true },
