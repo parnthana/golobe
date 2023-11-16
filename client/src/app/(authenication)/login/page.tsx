@@ -66,12 +66,14 @@ export default function LoginPage() {
         <form className="w-full mt-12 space-y-6">
           <InputField
             onKeyDown={(e) => (e.key === "Enter" ? handleSignIn() : null)}
+            value={email}
             label="Email"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <InputField
             onKeyDown={(e) => (e.key === "Enter" ? handleSignIn() : null)}
+            value={password}
             label="Password"
             type="password"
             placeholder="Password"

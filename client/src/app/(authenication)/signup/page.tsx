@@ -113,6 +113,7 @@ export default function SignUpPage() {
         </div>
         <form className="w-full mt-12">
           <InputField
+            value={email}
             label="Email"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
@@ -121,13 +122,15 @@ export default function SignUpPage() {
         </form>
         <form className="w-full space-x-6 flex flex-row mt-6">
           <InputField
-            label="Username"
+            value={name}
+            label="Name"
             type="text"
             placeholder="Username"
             onChange={(e) => setName(e.target.value)}
           />
           <InputField
             label="Tel."
+            value={tel}
             type="text"
             placeholder="Tel"
             onChange={(e) => setTel(e.target.value)}
@@ -136,6 +139,7 @@ export default function SignUpPage() {
         </form>
         <form className="w-full space-y-6 mt-6">
           <InputField
+            value={password}
             label="Password"
             type="password"
             placeholder="Password"
@@ -143,6 +147,7 @@ export default function SignUpPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputField
+            value={confirmPassword}
             error={passwordError}
             label="Confirm Password"
             type="password"
