@@ -1,3 +1,4 @@
+import { IBooking } from "@/models/booking.model";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
@@ -16,7 +17,7 @@ async function getAllBookings() {
   if (!res) {
     throw new Error("Failed to get bookings");
   }
-  return res.data;
+  return (await res.data.data) as IBooking[];
 }
 
 async function getBookingsForHotel(hotelId: string) {
@@ -98,7 +99,7 @@ async function updateBooking(
   if (!res) {
     throw new Error("Failed to update booking");
   }
-  return res.data;
+  return await res.data;
 }
 
 async function deleteBooking(bookingId: string) {
