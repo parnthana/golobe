@@ -228,7 +228,12 @@ export default function HotelDetailPage({
           </div>
         </LocalizationProvider>
         <button
-          disabled={!bookingDate || !checkoutDate || checkoutDate < bookingDate}
+          disabled={
+            !bookingDate ||
+            !checkoutDate ||
+            checkoutDate < bookingDate ||
+            checkoutDate.diff(bookingDate) >= 3
+          }
           onClick={() => handleBooking()}
           className="w-full py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"
         >

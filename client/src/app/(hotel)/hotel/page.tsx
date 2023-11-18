@@ -1,18 +1,34 @@
 "use client";
+import { useUser } from "@/app/containers/shared/hooks/userHook";
 import HotelPanel from "@/components/HotelPanel";
 import { AddIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
 import PopUpModal from "@/components/PopUpModal";
-import authService from "@/libs/authService";
+import SearchBox from "@/components/SearchBox";
 import hotelService from "@/libs/hotelService";
 import { IHotel } from "@/models/hotel.model";
-import { IUser } from "@/models/user.model";
-import { useSession } from "next-auth/react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function HotelPage() {
+  const [value, setValue] = useState<number[] | number>();
   const [hotels, setHotels] = useState<IHotel[]>([]);
+  const [minCost, setMinCost] = useState<number>();
+  const [maxCost, setMaxCost] = useState<number>();
+  const { user } = useUser();
+  const [isCreateHotel, setIsCreateHotel] = useState(false);
+  const [newAddress, setNewAddress] = useState<string>();
+  const [newTel, setNewTel] = useState<string>();
+  const [newPrice, setNewPrice] = useState<string>();
+  const [newDistrict, setNewDistrict] = useState<string>();
+  const [newProvince, setNewProvince] = useState<string>();
+  const [newPostalCode, setNewPostalCode] = useState<string>();
+  const [newPicture, setNewPicture] = useState<string>();
+  const [newName, setNewName] = useState<string>();
+  const [filteredHotels, setFilteredHotels] = useState<IHotel[]>(hotels);
+
   useEffect(() => {
     const getAllHotels = async () => {
       const hotels = await hotelService.getAllHotels();
@@ -22,6 +38,22 @@ export default function HotelPage() {
     };
     getAllHotels();
   }, []);
+  useEffect(() => {
+    if (hotels.length != 0) {
+      const min = hotels.reduce(
+        (min, hotel) => (hotel.price < min ? hotel.price : min),
+        hotels[0].price,
+      );
+      setMinCost(min);
+      const max = hotels.reduce(
+        (max, hotel) => (hotel.price > max ? hotel.price : max),
+        hotels[0].price,
+      );
+      setMaxCost(max);
+      setValue([min, max]);
+    }
+    setFilteredHotels(hotels);
+  }, [hotels]);
   const handleDeleteHotel = async (hotelId: string) => {
     const updatedHotels = hotels.filter((hotel) => hotel.id != hotelId);
     setHotels(updatedHotels);
@@ -34,27 +66,7 @@ export default function HotelPage() {
       }
     }
   };
-  const [user, setUser] = useState<IUser | null>(null);
-  const { data: session } = useSession();
-  useEffect(() => {
-    const getMe = async () => {
-      try {
-        authService.getMe().then((user) => setUser(user));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    if (session) getMe();
-  }, [session]);
-  const [isCreateHotel, setIsCreateHotel] = useState(false);
-  const [newAddress, setNewAddress] = useState<string>();
-  const [newTel, setNewTel] = useState<string>();
-  const [newPrice, setNewPrice] = useState<string>();
-  const [newDistrict, setNewDistrict] = useState<string>();
-  const [newProvince, setNewProvince] = useState<string>();
-  const [newPostalCode, setNewPostalCode] = useState<string>();
-  const [newPicture, setNewPicture] = useState<string>();
-  const [newName, setNewName] = useState<string>();
+
   const handleCreateHotel = async () => {
     if (
       newName &&
@@ -187,27 +199,68 @@ export default function HotelPage() {
     setNewAddress(undefined);
     setIsCreateHotel(false);
   };
+
+  const handleSearch = (filteredHotels: IHotel[]) => {
+    setFilteredHotels(filteredHotels);
+  };
+  const handleSetValue = (value: number[] | number) => {
+    setValue(value);
+    const filteredHotels = hotels.filter((hotel) => {
+      if (Array.isArray(value)) {
+        return hotel.price <= value[1] && hotel.price >= value[0];
+      }
+      return true;
+    });
+    setFilteredHotels(filteredHotels);
+  };
   return (
     <>
-      <main className="space-y-6">
-        <div className="flex flex-row w-full justify-between">
-          <div className="font-medium text-2xl flex justify-center items-center">
-            Available Hotel
-          </div>
-          {user?.role === "admin" && (
-            <div
-              onClick={() => setIsCreateHotel(true)}
-              className="p-2 bg-transparent border-2 border-mint-green rounded-full font-montserrat font-semibold hover:cursor-pointer items-center justify-center flex"
-            >
-              <AddIcon className="w-6 h-6" />
+      <main>
+        <div className="flex flex-row space-x-6 h-full">
+          <div className="flex flex-col w-1/5 space-y-9">
+            <div className="font-semibold text-2xl">Filter</div>
+            <div className="flex flex-col space-y-4">
+              <div className="font-semibold text-base">Price</div>
+              {hotels && value && maxCost && minCost && (
+                <div className="flex flex-col w-full">
+                  <div className="w-full flex px-4">
+                    <Slider
+                      pushable={true}
+                      range
+                      defaultValue={[minCost, maxCost]}
+                      min={minCost}
+                      max={maxCost}
+                      onChange={(value) => handleSetValue(value)}
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between w-full text-sm mt-2">
+                    {Array.isArray(value) ? <div>${value[0]}</div> : null}
+                    {Array.isArray(value) ? <div>${value[1]}</div> : null}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
+          <div className="max-h-screen bg-gray-300 w-[1px]"></div>
+          <div className="flex flex-col w-4/5 h-full space-y-6">
+            <div className="flex flex-row justify-between space-x-4 items-center">
+              {hotels && <SearchBox hotels={hotels} onSearch={handleSearch} />}
+              {user?.role === "admin" && (
+                <div
+                  onClick={() => setIsCreateHotel(true)}
+                  className="p-2 bg-transparent border-2 border-mint-green rounded-full w-fit h-fit font-montserrat font-semibold hover:cursor-pointer items-center justify-center flex"
+                >
+                  <AddIcon className="w-6 h-6" />
+                </div>
+              )}
+            </div>
+            <HotelPanel
+              isAdmin={user?.role === "admin"}
+              handleDeleteHotel={handleDeleteHotel}
+              hotels={filteredHotels}
+            />
+          </div>
         </div>
-        <HotelPanel
-          isAdmin={user?.role === "admin"}
-          handleDeleteHotel={handleDeleteHotel}
-          hotels={hotels}
-        />
       </main>
       <PopUpModal
         context={createHotelContext()}
