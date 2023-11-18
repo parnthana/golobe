@@ -22,13 +22,19 @@ interface BookingCardProps {
 }
 
 export default function BookingCard(props: BookingCardProps) {
-  const bookingDate = new Date(props.bookingInfo.bookingDate);
+  const [bookingDate, setBookingDate] = useState<Date>(
+    new Date(props.bookingInfo.bookingDate),
+  );
+  const [checkoutDate, setCheckoutDate] = useState<Date>(
+    new Date(props.bookingInfo.checkoutDate),
+  );
+  // const bookingDate = new Date(props.bookingInfo.bookingDate);
   const bookingDateString = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
   }).format(bookingDate);
-  const checkoutDate = new Date(props.bookingInfo.checkoutDate);
+  // const checkoutDate = new Date(props.bookingInfo.checkoutDate);
   const checkoutDateString = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
@@ -48,13 +54,13 @@ export default function BookingCard(props: BookingCardProps) {
           newCheckoutDate.toDate(),
           booking._id,
         );
-        console.log(res.data);
         if (res.success) {
           toast.success("Successfully update booking!", {
             position: toast.POSITION.TOP_RIGHT,
           });
           setBooking(res.data as IBooking);
-          console.log(booking);
+          setBookingDate(new Date(res.data.bookingDate));
+          setCheckoutDate(new Date(res.data.checkoutDate));
         } else {
           toast.error("An error occurred", {
             position: toast.POSITION.TOP_RIGHT,
@@ -144,7 +150,7 @@ export default function BookingCard(props: BookingCardProps) {
                       !newCheckoutDate ||
                       !newBookingDate ||
                       newCheckoutDate < newBookingDate ||
-                      newCheckoutDate.diff(newBookingDate) >= 3
+                      newCheckoutDate.diff(newBookingDate, "d") > 3
                     }
                     onClick={() => handleEditBooking()}
                     className="px-9 py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"

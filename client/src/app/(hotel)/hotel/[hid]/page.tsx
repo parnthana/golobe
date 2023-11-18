@@ -232,7 +232,7 @@ export default function HotelDetailPage({
             !bookingDate ||
             !checkoutDate ||
             checkoutDate < bookingDate ||
-            checkoutDate.diff(bookingDate) >= 3
+            checkoutDate.diff(bookingDate, "d") > 3
           }
           onClick={() => handleBooking()}
           className="w-full py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"
