@@ -28,7 +28,8 @@ export default function HotelPage() {
   const [newPicture, setNewPicture] = useState<string>();
   const [newName, setNewName] = useState<string>();
   const [filteredHotels, setFilteredHotels] = useState<IHotel[]>(hotels);
-
+  const [postalcodeError, setPostalcodeError] = useState("");
+  const [telError, setTelError] = useState("");
   useEffect(() => {
     const getAllHotels = async () => {
       const hotels = await hotelService.getAllHotels();
@@ -78,6 +79,24 @@ export default function HotelPage() {
       newPrice &&
       newProvince
     ) {
+      if (newPostalCode.length > 5) {
+        toast.error("Postal code cannot be more than 5 digits.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPostalcodeError("Error");
+        setTelError("");
+        return;
+      }
+      if (newTel.length != 10) {
+        toast.error("Please input valid tel.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setTelError("Error");
+        setPostalcodeError("");
+        return;
+      }
+      setPostalcodeError("");
+      setTelError("");
       const newHotel = {
         name: newName,
         address: newAddress,
@@ -88,17 +107,24 @@ export default function HotelPage() {
         district: newDistrict,
         postalcode: newPostalCode,
       };
-      const res = await hotelService.createHotel(newHotel);
-      const hotel = res.data as IHotel;
-      if (res.success) {
-        toast.success("Successfully create hotel", {
+      try {
+        const res = await hotelService.createHotel(newHotel);
+        const hotel = res.data as IHotel;
+        if (res.success) {
+          toast.success("Successfully create hotel", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setHotels((prevState) => [...prevState, hotel]);
+        } else {
+          toast.error("An error occurred!", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      } catch (err) {
+        toast.error("An error occurred!", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        setHotels((prevState) => [...prevState, hotel]);
-      } else {
-        toast.error("An error occurred", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        console.log(err);
       }
       handleClosePopUp();
     }
@@ -146,6 +172,7 @@ export default function HotelPage() {
             <div className="flex flex-col space-y-3 w-1/2">
               Postal Code
               <InputField
+                error={postalcodeError}
                 placeholder="Postal Code"
                 value={newPostalCode}
                 onChange={(e) => setNewPostalCode(e.target.value)}
@@ -154,6 +181,7 @@ export default function HotelPage() {
             <div className="flex flex-col space-y-3 w-1/2">
               Tel
               <InputField
+                error={telError}
                 placeholder="Tel"
                 value={newTel}
                 onChange={(e) => {
@@ -189,6 +217,8 @@ export default function HotelPage() {
     );
   };
   const handleClosePopUp = () => {
+    setTelError("");
+    setPostalcodeError("");
     setNewName(undefined);
     setNewTel(undefined);
     setNewPrice(undefined);

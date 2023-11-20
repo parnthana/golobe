@@ -1,12 +1,11 @@
 "use client";
+import { useUser } from "@/app/containers/shared/hooks/userHook";
 import { LocationIcon, PenIcon, PhoneIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
 import PopUpModal from "@/components/PopUpModal";
-import authService from "@/libs/authService";
 import bookingService from "@/libs/bookingService";
 import hotelService from "@/libs/hotelService";
 import { IHotel } from "@/models/hotel.model";
-import { IUser } from "@/models/user.model";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
@@ -24,17 +23,7 @@ export default function HotelDetailPage({
   const router = useRouter();
   const { data: session } = useSession();
   const [hotel, setHotel] = useState<IHotel | null>(null);
-  const [user, setUser] = useState<IUser | null>(null);
-  useEffect(() => {
-    const getMe = async () => {
-      try {
-        authService.getMe().then((user) => setUser(user));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    if (session) getMe();
-  }, [session]);
+  const { user } = useUser();
   const [bookingSectionVisible, setBookingSectionVisible] = useState(false);
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
   const [checkoutDate, setCheckoutDate] = useState<Dayjs | null>(null);
