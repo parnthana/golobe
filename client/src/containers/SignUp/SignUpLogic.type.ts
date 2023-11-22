@@ -1,4 +1,4 @@
-import { ContainerCommon } from "@/app/containers/shared/common_container";
+import { ContainerCommon } from "@/containers/shared/common_container";
 import { Dispatch, SetStateAction } from "react";
 
 interface SignUpLogic {

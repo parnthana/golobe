@@ -1,4 +1,4 @@
-import { LoginLogicProps } from "@/app/containers/Login/LoginLogic.type";
+import { LoginLogicProps } from "@/containers/Login/LoginLogic.type";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

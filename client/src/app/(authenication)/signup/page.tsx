@@ -1,5 +1,5 @@
 "use client";
-import { SignUpLogic } from "@/app/containers/SignUp/SignUpLogic";
+import { SignUpLogic } from "@/containers/SignUp/SignUpLogic";
 import Button from "@/components/Button";
 import { LogoIcon } from "@/components/icons";
 import InputField from "@/components/InputField";

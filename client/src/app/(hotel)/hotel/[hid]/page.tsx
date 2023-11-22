@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "@/app/containers/shared/hooks/userHook";
+import { useUser } from "@/libs/hooks/userHook";
 import CustomImage from "@/components/CustomImage";
 import { LocationIcon, PenIcon, PhoneIcon } from "@/components/icons";
 import InputField from "@/components/InputField";

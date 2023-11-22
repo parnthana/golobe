@@ -1,4 +1,4 @@
-import { SignUpLogicProps } from "@/app/containers/SignUp/SignUpLogic.type";
+import { SignUpLogicProps } from "@/containers/SignUp/SignUpLogic.type";
 import authService from "@/libs/authService";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

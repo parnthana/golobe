@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "@/app/containers/shared/hooks/userHook";
+import { useUser } from "@/libs/hooks/userHook";
 import HotelPanel from "@/components/HotelPanel";
 import { AddIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
