@@ -9,6 +9,7 @@ import {
   Vector4Icon,
 } from "@/components/icons";
 import bookingService from "@/libs/bookingService";
+import { validateBooking } from "@/libs/utils/validateBooking";
 import { IBooking } from "@/models/booking.model";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -28,13 +29,11 @@ export default function BookingCard(props: BookingCardProps) {
   const [checkoutDate, setCheckoutDate] = useState<Date>(
     new Date(props.bookingInfo.checkoutDate),
   );
-  // const bookingDate = new Date(props.bookingInfo.bookingDate);
   const bookingDateString = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
   }).format(bookingDate);
-  // const checkoutDate = new Date(props.bookingInfo.checkoutDate);
   const checkoutDateString = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
@@ -146,12 +145,7 @@ export default function BookingCard(props: BookingCardProps) {
                     </div>
                   </LocalizationProvider>
                   <button
-                    disabled={
-                      !newCheckoutDate ||
-                      !newBookingDate ||
-                      newCheckoutDate < newBookingDate ||
-                      newCheckoutDate.diff(newBookingDate, "d") > 3
-                    }
+                    disabled={!validateBooking(newBookingDate, newCheckoutDate)}
                     onClick={() => handleEditBooking()}
                     className="px-9 py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"
                   >

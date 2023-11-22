@@ -6,6 +6,7 @@ import InputField from "@/components/InputField";
 import PopUpModal from "@/components/PopUpModal";
 import bookingService from "@/libs/bookingService";
 import hotelService from "@/libs/hotelService";
+import { validateBooking } from "@/libs/utils/validateBooking";
 import { IHotel } from "@/models/hotel.model";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -218,12 +219,7 @@ export default function HotelDetailPage({
           </div>
         </LocalizationProvider>
         <button
-          disabled={
-            !bookingDate ||
-            !checkoutDate ||
-            checkoutDate < bookingDate ||
-            checkoutDate.diff(bookingDate, "d") > 3
-          }
+          disabled={!validateBooking(bookingDate, checkoutDate)}
           onClick={() => handleBooking()}
           className="w-full py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"
         >
