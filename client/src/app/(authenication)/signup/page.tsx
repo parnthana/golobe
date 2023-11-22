@@ -1,6 +1,5 @@
 "use client";
 import { SignUpLogic } from "@/containers/SignUp/SignUpLogic";
-import Button from "@/components/Button";
 import { LogoIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
 import Image from "next/image";
@@ -90,7 +89,12 @@ export default function SignUpPage() {
                 onChange={(e) => onInputConfirmPassword(e.target.value)}
               />
             </form>
-            <Button text="Create account" onClick={signUp} />
+            <button
+              onClick={signUp}
+              className="w-full px-4 py-2 bg-mint-green rounded-[4px] font-montserrat font-semibold mt-10"
+            >
+              Create account
+            </button>
             <span className="font-montserrat mb-8 w-full text-center mt-4">
               Already have an account?{" "}
               <span

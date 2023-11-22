@@ -1,6 +1,5 @@
 "use client";
 import { LoginLogic } from "@/containers/Login/LoginLogic";
-import Button from "@/components/Button";
 import { LogoIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
 import Image from "next/image";
@@ -44,7 +43,12 @@ export default function LoginPage() {
                 onChange={(e) => onInputPassword(e.target.value)}
               />
             </form>
-            <Button text="Login" onClick={signIn} />
+            <button
+              onClick={signIn}
+              className="w-full px-4 py-2 bg-mint-green rounded-[4px] font-montserrat font-semibold mt-10"
+            >
+              Login
+            </button>
             <span className="mt-4 font-montserrat text-center w-full">
               {"Don't have an account?"}{" "}
               <span
