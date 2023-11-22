@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import TopMenu from "@/components/TopMenu";
 
 export default function HotelRootLayout({
@@ -6,9 +7,12 @@ export default function HotelRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="w-screen min-h-screen bg-[#FAFBFC]">
-      <TopMenu />
-      <div className="py-12 px-24">{children}</div>
-    </main>
+    <>
+      <main className="w-full min-h-screen bg-[#FAFBFC]">
+        <TopMenu />
+        <div className="py-12 px-24">{children}</div>
+      </main>
+      <Footer />
+    </>
   );
 }

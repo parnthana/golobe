@@ -30,6 +30,8 @@ export default function HotelPage() {
   const [filteredHotels, setFilteredHotels] = useState<IHotel[]>(hotels);
   const [postalcodeError, setPostalcodeError] = useState("");
   const [telError, setTelError] = useState("");
+  const [priceError, setPriceError] = useState("");
+
   useEffect(() => {
     const getAllHotels = async () => {
       const hotels = await hotelService.getAllHotels();
@@ -95,8 +97,18 @@ export default function HotelPage() {
         setPostalcodeError("");
         return;
       }
+      if (isNaN(parseInt(newPrice))) {
+        toast.error("Please input valid price.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setTelError("");
+        setPostalcodeError("");
+        setPriceError("Error");
+        return;
+      }
       setPostalcodeError("");
       setTelError("");
+      setPriceError("");
       const newHotel = {
         name: newName,
         address: newAddress,
@@ -131,7 +143,7 @@ export default function HotelPage() {
   };
   const createHotelContext = () => {
     return (
-      <div className="px-8 pb-8 flex flex-col space-y-9">
+      <div className="px-8 pb-8 flex flex-col space-y-9 w-full">
         <div className="font-medium text-3xl mb-3">Create Hotel</div>
         <div className="flex-col flex space-y-4">
           <div className="flex flex-col space-y-3">
@@ -193,6 +205,7 @@ export default function HotelPage() {
           <div className="flex flex-col space-y-3">
             Price
             <InputField
+              error={priceError}
               placeholder="price"
               value={newPrice}
               onChange={(e) => setNewPrice(e.target.value)}
@@ -208,6 +221,16 @@ export default function HotelPage() {
           </div>
         </div>
         <button
+          disabled={
+            !newName ||
+            !newAddress ||
+            !newPicture ||
+            !newDistrict ||
+            !newTel ||
+            !newPostalCode ||
+            !newPrice ||
+            !newProvince
+          }
           onClick={() => handleCreateHotel()}
           className="w-full py-4 bg-mint-green rounded-[4px] font-montserrat font-semibold text-center disabled:bg-neutrals-gray-2 disabled:text-neutrals-gray-5"
         >

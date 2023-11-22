@@ -1,4 +1,5 @@
 "use client";
+import CustomImage from "@/components/CustomImage";
 import { LocationIcon, PhoneIcon, TrashIcon } from "@/components/icons";
 import { IHotel } from "@/models/hotel.model";
 import Image from "next/image";
@@ -15,12 +16,9 @@ export default function HotelCard(props: HotelCardProps) {
   return (
     <div className="flex flex-row w-full h-full bg-white shadow-md rounded-md">
       <div className="w-[300px] relative flex items-start rounded-tl-md rounded-bl-md">
-        <Image
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        <CustomImage
           src={props.hotelInfo.picture}
           alt="hotel picture"
-          fill={true}
           className="object-cover rounded-tl-md rounded-bl-md"
         />
       </div>

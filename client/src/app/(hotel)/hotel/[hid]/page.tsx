@@ -1,5 +1,6 @@
 "use client";
 import { useUser } from "@/app/containers/shared/hooks/userHook";
+import CustomImage from "@/components/CustomImage";
 import { LocationIcon, PenIcon, PhoneIcon } from "@/components/icons";
 import InputField from "@/components/InputField";
 import PopUpModal from "@/components/PopUpModal";
@@ -10,7 +11,6 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -70,6 +70,7 @@ export default function HotelDetailPage({
         if (res.success) {
           toast.success("Booking success!");
         }
+        setTimeout(() => router.push("/booking"), 1000);
         handleClosePopUp();
       }
     } catch (e) {
@@ -108,7 +109,7 @@ export default function HotelDetailPage({
   };
   const editHotelContext = () => {
     return (
-      <div className="px-8 pb-8 flex flex-col space-y-9">
+      <div className="px-8 pb-8 flex flex-col space-y-9 w-full">
         <div className="font-medium text-3xl mb-3">Edit Hotel</div>
         <div className="flex-col flex space-y-4">
           <div className="flex flex-col space-y-3">
@@ -193,7 +194,7 @@ export default function HotelDetailPage({
   };
   const bookingContext = () => {
     return (
-      <div className="px-8 pb-8 flex flex-col space-y-9">
+      <div className="px-8 pb-8 flex flex-col space-y-9 w-full">
         <div className="font-medium text-3xl mb-3">Booking Detail</div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div className="flex-col flex space-y-6">
@@ -280,8 +281,7 @@ export default function HotelDetailPage({
           </div>
           <div className="w-full flex items-center justify-center flex-row space-x-8">
             <div className="h-[550px] w-full relative">
-              <Image
-                fill={true}
+              <CustomImage
                 src={hotel.picture}
                 alt="hotel picture"
                 className="object-cover rounded-2xl"

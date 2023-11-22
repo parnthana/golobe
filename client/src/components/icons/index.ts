@@ -1,7 +1,7 @@
 export { default as AddIcon } from './Add';
 export { default as BedIcon } from './Bed';
 export { default as BookingIcon } from './Booking';
-export { default as BuildingIcon } from './Building';
+export { default as IconIcon } from './Icon';
 export { default as LocationIcon } from './Location';
 export { default as LogoIcon } from './Logo';
 export { default as Logo2Icon } from './Logo2';
@@ -14,3 +14,4 @@ export { default as TrashIcon } from './Trash';
 export { default as UserIcon } from './User';
 export { default as Vector1Icon } from './Vector1';
 export { default as Vector4Icon } from './Vector4';
+export { default as BuildingIcon } from './Building';
